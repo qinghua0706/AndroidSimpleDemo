@@ -11,10 +11,38 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        def alias = "key0"
+        def password = "111111"
+        def keyPass = "111111"
+        def filePath = "android.jks"  // keystore file path
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            keyAlias alias
+            keyPassword keyPass
+            storeFile file(filePath)
+            storePassword(password)
+        }
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            keyAlias alias
+            keyPassword keyPass
+            storeFile file(filePath)
+            storePassword(password)
+        }
+    }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
