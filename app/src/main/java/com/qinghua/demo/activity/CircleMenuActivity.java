@@ -26,22 +26,17 @@ public class CircleMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //自已切换布局文件看效果
-        setContentView(R.layout.activity_circle_menu);
+        setContentView(R.layout.activity_circle_menu_ccb);
 
         mCircleMenuLayout = (CircleMenuLayout) findViewById(R.id.id_menulayout);
         mCircleMenuLayout.setMenuItemIconsAndTexts(mItemImgs, mItemTexts);
-
-
-
         mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener()
         {
-
             @Override
             public void itemClick(View view, int pos)
             {
                 Toast.makeText(CircleMenuActivity.this, mItemTexts[pos],
                         Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -50,7 +45,6 @@ public class CircleMenuActivity extends AppCompatActivity {
                 Toast.makeText(CircleMenuActivity.this,
                         "you can do something just like ccb  ",
                         Toast.LENGTH_SHORT).show();
-
             }
         });
 

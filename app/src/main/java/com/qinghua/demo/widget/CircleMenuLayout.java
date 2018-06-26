@@ -96,7 +96,7 @@ public class CircleMenuLayout extends ViewGroup
 	}
 
 	/**
-	 * 设置布局的宽高，并策略menu item宽高
+	 * 设置布局的宽高，并测量menu item宽高
 	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -133,16 +133,16 @@ public class CircleMenuLayout extends ViewGroup
 			resWidth = resHeight = Math.min(width, height);
 		}
 
+		// 设置完后getMeasuredWidth和getMeasuredHeight就有值了
 		setMeasuredDimension(resWidth, resHeight);
-
 		// 获得半径
 		mRadius = Math.max(getMeasuredWidth(), getMeasuredHeight());
 
 		// menu item数量
 		final int count = getChildCount();
-		// menu item尺寸
+		// menu item尺寸，直径的1/4
 		int childSize = (int) (mRadius * RADIO_DEFAULT_CHILD_DIMENSION);
-		// menu item测量模式
+		// menu item测量模式，都为固定大小
 		int childMode = MeasureSpec.EXACTLY;
 
 		// 迭代测量
@@ -158,6 +158,7 @@ public class CircleMenuLayout extends ViewGroup
 			// 计算menu item的尺寸；以及和设置好的模式，去对item进行测量
 			int makeMeasureSpec = -1;
 
+			// 中心菜单，固定宽高，为总宽度的1/3
 			if (child.getId() == R.id.id_circle_menu_item_center)
 			{
 				makeMeasureSpec = MeasureSpec.makeMeasureSpec(
@@ -165,6 +166,7 @@ public class CircleMenuLayout extends ViewGroup
 						childMode);
 			} else
 			{
+				// 其他菜单，固定宽高，为总宽度的1/4
 				makeMeasureSpec = MeasureSpec.makeMeasureSpec(childSize,
 						childMode);
 			}
@@ -262,19 +264,20 @@ public class CircleMenuLayout extends ViewGroup
 		View cView = findViewById(R.id.id_circle_menu_item_center);
 		if (cView != null)
 		{
-			cView.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-
-					if (mOnMenuItemClickListener != null)
-					{
-						mOnMenuItemClickListener.itemCenterClick(v);
-					}
-				}
-			});
-			// 设置center item位置
+			// 这里移到初始化的地方
+//			cView.setOnClickListener(new OnClickListener()
+//			{
+//				@Override
+//				public void onClick(View v)
+//				{
+//
+//					if (mOnMenuItemClickListener != null)
+//					{
+//						mOnMenuItemClickListener.itemCenterClick(v);
+//					}
+//				}
+//			});
+			// 设置center item位置，圆半径减去一般宽高，就是起始位置
 			int cl = layoutRadius / 2 - cView.getMeasuredWidth() / 2;
 			int cr = cl + cView.getMeasuredWidth();
 			cView.layout(cl, cl, cr, cr);
@@ -287,6 +290,11 @@ public class CircleMenuLayout extends ViewGroup
 	 */
 	private float mLastX;
 	private float mLastY;
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		return super.onInterceptTouchEvent(ev);
+	}
 
 	/**
 	 * 自动滚动的Runnable
@@ -506,6 +514,18 @@ public class CircleMenuLayout extends ViewGroup
 			// 添加view到容器中
 			addView(view);
 		}
+		View cView = findViewById(R.id.id_circle_menu_item_center);
+		if (cView != null) {
+			cView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					if (mOnMenuItemClickListener != null) {
+						mOnMenuItemClickListener.itemCenterClick(v);
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -571,6 +591,7 @@ public class CircleMenuLayout extends ViewGroup
 			mStartAngle += (angelPerSecond / 30);
 			// 逐渐减小这个值
 			angelPerSecond /= 1.0666F;
+			// 不断递归回调自己，removecallback之后则取停止线程
 			postDelayed(this, 30);
 			// 重新布局
 			requestLayout();
