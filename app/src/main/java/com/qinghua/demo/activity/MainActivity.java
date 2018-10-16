@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     public void openCircleMenu() {
         ARouter.getInstance().build("/second/circle_menu").navigation();
     }
+    @OnClick(R.id.glide_demo)
+    public void openGlideDemo() {
+        ARouter.getInstance().build("/second/glide_demo").navigation();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
