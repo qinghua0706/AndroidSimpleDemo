@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--标题栏
+        设置的layout_scrollFlags有如下几种选项：
+        scroll: 所有想滚动出屏幕的view都需要设置这个flag-没有设置这个flag的view将被固定在屏幕顶部。
+        enterAlways: 这个flag让任意向下的滚动都会导致该view变为可见,启用快速“返回模式”。
+        enterAlwaysCollapsed: 当你的视图已经设置minHeight属性又使用此标志时，
+                              你的视图只能以最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。
+        exitUntilCollapsed: 滚动退出屏幕，最后折叠在顶端。-->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="测试标题">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/toolbar_height"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="滚动出屏幕"
+                app:layout_scrollFlags="scroll" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:background="@drawable/toolbar_bg_color"
+                android:gravity="center"
+                android:theme="@style/ToolbarTheme"
+                app:layout_collapseMode="pin"
+                app:title="ceshi">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="marquee"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="标题"
+                    android:textColor="@color/color_33"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <!--选项卡-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#c0f9d0"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabTextColor="@color/colorPrimary" />
+    </android.support.design.widget.AppBarLayout>
+    <!--包含可滑动的布局内容(RecyclerView,NestedScrollView,不支持ListView，ScrollView)
+    必须要设置app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    属性来告知CoordinatorLayout该组件是带有滑动行为的组件,
+    然后CoordinatorLayout在接受到滑动时会通知AppBarLayout中可滑动的Toolbar可以滑出屏幕，
+    这个滑动布局RecyclerView我写在fragment -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
+
+</android.support.design.widget.CoordinatorLayout>

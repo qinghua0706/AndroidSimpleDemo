@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".activity.CircleMenuActivity"/>
         <activity android:name=".activity.GlideDemoActivity"/>
+        <activity android:name=".activity.CoordinatorDemoActivity"/>
     </application>
 
 </manifest>

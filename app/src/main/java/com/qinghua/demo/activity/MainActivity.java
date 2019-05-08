@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         ARouter.getInstance().build("/second/glide_demo").navigation();
     }
 
+    @OnClick(R.id.coordinator_demo)
+    public void openCoordinatorDemo() {
+        ARouter.getInstance().build("/second/coordinator_demo").navigation();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
