@@ -51,7 +51,9 @@ public class GlideDemoActivity extends AppCompatActivity {
                 downloadPic(imagePath);
                 break;
             case R.id.gif:
-                Glide.with(this).asGif().load(R.mipmap.voice_gif).into(mImageView);
+                // 加不加asGif都一样
+//                Glide.with(this).asGif().load(R.mipmap.voice_gif).into(mImageView);
+                Glide.with(this).load(R.mipmap.voice_gif).into(mImageView);
                 break;
             default:
                 break;
